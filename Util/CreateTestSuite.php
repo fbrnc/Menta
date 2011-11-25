@@ -98,8 +98,8 @@ class Menta_Util_CreateTestSuite {
 	 * --testPath <path>
 	 * to the phpunit call
 	 *
-	 * If no parameter is set it takes all tests from the "Tests" folder parallel to the Menta Framework location
-	 *
+	 * If no parameter is set it takes all tests from the "Tests" folder parallel to the Menta Framework parent directory
+	 * 
 	 * @return PHPUnit_Framework_TestSuite|false
 	 */
 	public static function suite() {
@@ -110,7 +110,7 @@ class Menta_Util_CreateTestSuite {
 			$testSuite = self::createSuiteFromFile($argv[$index+1]);
 		} else {
 			$index = array_search('--testPath', $argv);
-			$testPath = $index ? $argv[$index+1] : dirname(__FILE__) . '/../../Tests/';
+			$testPath = $index ? $argv[$index+1] : MENTA_ROOTDIR . '/../../Tests/';
 			$testSuite = self::createSuiteFromPath($testPath);
 		}
 

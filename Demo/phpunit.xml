@@ -1,8 +1,18 @@
-<phpunit>
+<phpunit
+	printerClass="Menta_PHPUnit_Listener_VerboseResultPrinter"
+	printerFile="../PHPUnit/Listener/VerboseResultPrinter.php">
 
 	<php>
-		<var name="testing.selenium.seleniumServerUrl" value="http://localhost:4444/wd/hub" />
+		<var name="testing.selenium.seleniumServerUrl" value="http://seleniumserver:4444/wd/hub" />
 		<var name="testing.selenium.browser" value="firefox" />
 	</php>
+
+	<listeners>
+		<listener class="Menta_PHPUnit_Listener_HtmlResultPrinter" file="../PHPUnit/Listener/HtmlResultPrinter.php">
+			<arguments>
+				<string>reports/index.html</string><!-- target file -->
+			</arguments>
+		</listener>
+	</listeners>
 
 </phpunit>

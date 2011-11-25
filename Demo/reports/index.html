@@ -1,0 +1,166 @@
+<html>
+<head>
+	<title>PHPUnit HTML test report</title>
+	<style type="text/css">
+		body { font-family: arial, verdana, sans-serif; font-size: 12px; }
+		div.suite,
+		div.browser { border-left: 6px solid #ccc; border-top: 1px solid #ccc; margin: 5px 0 0 10px; padding: 3px 0 0 3px; overflow: hidden; color: #ccc; }
+		div.suite:hover,
+		div.browser:hover { color: black; border-color: #777; }
+		div.wrapper { border: none; padding: 0; margin: 0; }
+		div.browser { float:left; }
+		h2 { font-size: 12px; margin: 0; }
+		div.test { border-style: solid; border-width: 1px 0 0 6px; position: relative; margin: 4px 0 0 10px; padding: 3px 30px 3px 3px; color: black; }
+		div.test:hover { border-color: #777; }
+		.test { min-width: 300px; overflow: hidden; }
+		.dataset .test { min-width: 280px; }
+		.error { border-color: red; background-color: #ffb6c1; }
+		.failed { border-color: red; background-color: #ffb6c1;  }
+		.passed { border-color: green; background-color: #90ee90; }
+		.skipped { border-color: yellow; background-color: #ffffe0;}
+		.incomplete { border-color: yellow; background-color: #ffffe0;}
+		.duration { position: absolute; top: 2px; right: 2px; font-size: 9px; }
+		pre { margin: 0; padding: 0; overflow: auto; }
+		ul { padding: 0; margin: 0; }
+		li { list-style: none; float: left; padding: 0 5px; margin: 0 0 0 5px; }
+		.legend li { border-top: 1px solid; border-left: 5px solid; }
+		li.label { border: none; font-weight: bold; }
+		.legend,
+		.bar { overflow: hidden; margin-bottom: 10px; }
+		#progress-wrapper { width: auto; height: 30px; }
+		.progress-value { height: 30px; display: block; float: left; }
+		.progress-inner { border-style: solid; border-width: 1px 0 0 5px; display: block; height: 29px; padding: 3px; }
+		.toggle { text-decoration: none; color: black; background-color: rgba(255, 255, 255, 0.5); padding: 2px 5px; margin-left: 3px; }
+	</style>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+
+			function updateVisibility() {
+				$('.legend input').each(function() {
+					var $this = $(this);
+					var type = $this.attr('id').split('_')[1];
+					$('div.test.'+type).toggle($this.is(':checked'));
+				});
+				$('div.suite, div.browser').show().each(function() {
+					var $this = $(this);
+					if ($this.find('.test:visible').length == 0) {
+						$this.hide();
+					}
+				});
+				var duration = getSelectedDuration();
+				if (duration > 180) {
+					duration = Math.floor(duration / 60) + ' min';
+				} else {
+					duration += ' sec';
+				}
+				$('#selected-duration').text(duration);
+			}
+
+			function getSelectedDuration() {
+				var duration = 0;
+				$('.suites .test:visible').each(function() {
+					duration += parseFloat($(this).find('.duration').text().replace(/s/g,''));
+				});
+				return Math.round(duration);
+			}
+
+			function updateHeatmap() {
+				if ($('#feature_duration').is(':checked')) {
+					var max = 0;
+					$('.suites .test').each(function() {
+						var $this = $(this);
+						var duration = parseFloat($this.find('.duration').text().replace(/s/g,''));
+						$this.data('duration', duration);
+						if (duration > max) {
+							max = duration
+						}
+					}).each(function() {
+						var $this = $(this);
+						var percent = ($this.data('duration')/max) * 100;
+						$this.css('background-color', getColor(percent));
+					});
+				} else {
+					$('.suites .test').each(function() {
+						$(this).css('background-color', '');
+					});
+				}
+			}
+
+			function getColor(percent) {
+				var a = { r: 255, g: 0, b: 0 } // start color
+				var b = { r: 255, g: 255, b: 0 } // end color
+				var c = { // color representing percentage value
+					r: parseInt((b.r + ((percent * (a.r - b.r)) / 100)).toFixed(0)),
+					g: parseInt((b.g + ((percent * (a.g - b.g)) / 100)).toFixed(0)),
+					b: parseInt((b.b + ((percent * (a.b - b.b)) / 100)).toFixed(0))
+				}
+				return 'rgb(' + c.r + ',' + c.g + ',' + c.b + ')';
+			}
+
+			$('.test').each(function() {
+				$this = $(this);
+				$header = $this.find('h2');
+				if ($this.find('.exception').length) {
+					$header.append('<a title="Toggle exception" href="#" class="toggle toggle-exception">E</a>');
+				}
+				if ($this.find('.screenshots').length) {
+					$header.append('<a title="Toggle screenshots" href="#" class="toggle toggle-screenshots">S</a>');
+				}
+			});
+			$('.exception, .screenshots').hide();
+
+			$('.test .toggle-exception').click(function() {
+				$(this).parents('.test').find('.exception').toggle();
+				return false;
+			});
+			$('.test .toggle-screenshots').click(function() {
+				$(this).parents('.test').find('.screenshots').toggle();
+				return false;
+			});
+
+			$('#show-all-screenshots').click(function() { $('.screenshots').show(); })
+			$('#hide-all-screenshots').click(function() { $('.screenshots').hide(); })
+			$('#show-all-exceptions').click(function() { $('.exception').show(); })
+			$('#hide-all-exceptions').click(function() { $('.exception').hide(); })
+
+			updateVisibility();
+			$('.filter input').click(updateVisibility);
+
+			updateHeatmap();
+			$('#feature_duration').click(updateHeatmap);
+		});
+	</script>
+</head>
+<body>
+
+	<div class="bar">
+		<div id="progress-wrapper">
+											<div class="progress-value" style="width: 100%">
+					  <div class="progress-inner passed">
+						  Passed: 100%
+					  </div>
+				</div>
+					</div>
+	</div>
+
+	<div class="legend">
+		<ul>
+			<li class="label">Filter:</li>
+											<li class="filter passed">
+					<input type="checkbox" checked="checked" id="type_passed"><label for="type_passed">Passed (1)</label>
+				</li>
+						<li class="label">Features:</li>
+			<li><input type="checkbox" id="feature_duration"><label for="feature_duration">Duration Heatmap</label></li>
+			<li class="label">Duration:</li>
+			<li id="selected-duration"></li>
+			<li class="label">Screenshots:</li>
+			<li><a href="#" id="show-all-screenshots">Show</a> | <a href="#" id="hide-all-screenshots">Hide</a></li>
+			<li class="label">Exceptions:</li>
+			<li><a href="#" id="show-all-exceptions">Show</a> | <a href="#" id="hide-all-exceptions">Hide</a></li>
+		</ul>
+	</div>
+
+	<div class="wrapper suites"><div class="suite"><h2>MentaDemoTest</h2><div class="wrapper tests"><div class="test passed"><div class="duration">3.96s</div><h2>testTitle</h2><div class="content"></div><!-- content --></div><!-- test --></div><!-- tests --></div><!-- suite --></div><!-- suites -->
+</body>
+</html>

@@ -1,4 +1,6 @@
- <?php
+<?php
+
+define('MENTA_ROOTDIR', dirname(__FILE__));
 
 /**
  * Simple autoloading
