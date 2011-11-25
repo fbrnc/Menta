@@ -1,0 +1,33 @@
+POST: http://vmhost:4444/wd/hub/session - {"desiredCapabilities":{"browserName":"firefox"}}
+POST: http://vmhost:4444/wd/hub/session - {"desiredCapabilities":{"browserName":"firefox"}}
+POST: http://vmhost:4444/wd/hub/session/1322169242956/window/main/position - {"x":0,"y":0}
+POST: http://vmhost:4444/wd/hub/session/1322169242956/window/main/size - {"width":1280,"height":1024}
+POST: http://vmhost:4444/wd/hub/session/1322169242956/timeouts/implicit_wait - {"ms":10000}
+POST: http://vmhost:4444/wd/hub/session/1322169242956/url - {"url":"http:\/\/www.google.com"}
+POST: http://vmhost:4444/wd/hub/session/1322169242956/element - {"using":"id","value":"lst-ib"}
+POST: http://vmhost:4444/wd/hub/session/1322169242956/element/0/value - {"value":["Fabrizio Branca"]}
+POST: http://vmhost:4444/wd/hub/session/1322169242956/element/0/value - {"value":["\ue006"]}
+DELETE: http://vmhost:4444/wd/hub/session/1322169242956
+POST: http://vmhost:4444/wd/hub/session - {"desiredCapabilities":{"browserName":"firefox"}}
+POST: http://vmhost:4444/wd/hub/session/1322169242957/window/main/position - {"x":0,"y":0}
+POST: http://vmhost:4444/wd/hub/session/1322169242957/window/main/size - {"width":1280,"height":1024}
+POST: http://vmhost:4444/wd/hub/session/1322169242957/timeouts/implicit_wait - {"ms":10000}
+POST: http://vmhost:4444/wd/hub/session/1322169242957/url - {"url":"http:\/\/www.google.com"}
+GET: http://vmhost:4444/wd/hub/session/1322169242957/title
+DELETE: http://vmhost:4444/wd/hub/session/1322169242957
+POST: http://vmhost:4444/wd/hub/session - {"desiredCapabilities":{"browserName":"firefox"}}
+POST: http://vmhost:4444/wd/hub/session/1322169242958/window/main/position - {"x":0,"y":0}
+POST: http://vmhost:4444/wd/hub/session/1322169242958/window/main/size - {"width":1280,"height":1024}
+POST: http://vmhost:4444/wd/hub/session/1322169242958/timeouts/implicit_wait - {"ms":10000}
+POST: http://vmhost:4444/wd/hub/session/1322169242958/url - {"url":"http:\/\/www.google.com"}
+POST: http://vmhost:4444/wd/hub/session/1322169242958/element - {"using":"id","value":"lst-ib"}
+POST: http://vmhost:4444/wd/hub/session/1322169242958/element/0/value - {"value":["Fabrizio Branca"]}
+POST: http://vmhost:4444/wd/hub/session/1322169242958/element/0/value - {"value":["\ue006"]}
+DELETE: http://vmhost:4444/wd/hub/session/1322169242958
+POST: http://vmhost:4444/wd/hub/session - {"desiredCapabilities":{"browserName":"firefox"}}
+POST: http://vmhost:4444/wd/hub/session/1322169242959/window/main/position - {"x":0,"y":0}
+POST: http://vmhost:4444/wd/hub/session/1322169242959/window/main/size - {"width":1280,"height":1024}
+POST: http://vmhost:4444/wd/hub/session/1322169242959/timeouts/implicit_wait - {"ms":10000}
+POST: http://vmhost:4444/wd/hub/session/1322169242959/url - {"url":"http:\/\/www.google.com"}
+GET: http://vmhost:4444/wd/hub/session/1322169242959/title
+DELETE: http://vmhost:4444/wd/hub/session/1322169242959

@@ -1,0 +1,8 @@
+<phpunit>
+
+	<php>
+		<var name="testing.selenium.seleniumServerUrl" value="http://localhost:4444/wd/hub" />
+		<var name="testing.selenium.browser" value="firefox" />
+	</php>
+
+</phpunit>

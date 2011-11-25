@@ -1,0 +1,12 @@
+<phpunit>
+	<php>
+
+		<!-- Following settings will be processed on session init -->
+		<var name="testing.selenium.windowPosition" value="0,0" />
+		<var name="testing.selenium.windowSize" value="1280x1024" />
+		<var name="testing.selenium.windowFocus" value="1" />
+		<var name="testing.selenium.timeoutImplicitWait" value="10000" /><!-- time in ms -->
+
+	</php>
+</phpunit>
+
