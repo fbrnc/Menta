@@ -13,7 +13,7 @@ class MentaDemoTest extends PHPUnit_Framework_TestCase {
 
 	public function testDemo() {
 		$session = Menta_SessionManager::getSession();
-		$session->open('http://www.google.com');
+		$session->open('http://www.google.com/ncr');
 		$input = $session->element(WebDriver_Container::BY_ID, 'lst-ib');
 		$input->value(array('value' => array('Fabrizio Branca')));
 		$input->value(array('value' => array(WebDriver_Keys::ReturnKey)));
@@ -22,7 +22,7 @@ class MentaDemoTest extends PHPUnit_Framework_TestCase {
 
 	public function testTitle() {
 		$session = Menta_SessionManager::getSession();
-		$session->open('http://www.google.com');
+		$session->open('http://www.google.com/ncr');
 		$assertHelper = Menta_ComponentManager::get('Menta_Component_Helper_Assert'); /* @var $assertHelper Menta_Component_Helper_Assert */
 		$assertHelper->setTest($this)->assertTitle('Google');
 		Menta_SessionManager::closeSession();
