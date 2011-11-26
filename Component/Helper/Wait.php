@@ -205,10 +205,11 @@ class Menta_Component_Helper_Wait extends Menta_Component_Abstract {
 
 	/**
 	 * Get common helper
+	 * (Needs to be public because it is called inside closures)
 	 *
 	 * @return Menta_Component_Helper_Common
 	 */
-	protected function getHelperCommon() {
+	public function getHelperCommon() {
 		return Menta_ComponentManager::get('Menta_Component_Helper_Common');
 	}
 
