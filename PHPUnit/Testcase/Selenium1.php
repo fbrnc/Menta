@@ -54,7 +54,7 @@
  * @method typeAndLeave($element, $text)
  * @method assertElementContainsText($element, $text, $message='')
  */
-abstract class Menta_PHPUnit_PHPUnit_Testcase_Selenium1 extends Menta_PHPUnit_Testcase_Selenium2 {
+abstract class Menta_PHPUnit_Testcase_Selenium1 extends Menta_PHPUnit_Testcase_Selenium2 {
 
 	protected $captureScreenshotOnFailure = false;
 
