@@ -11,8 +11,8 @@
  * @author Fabrizio Branca
  * @since 2011-11-18
  */
-abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCase implements Menta_Interface_ScreenshotTestcase {
 
+abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCase implements Menta_Interface_ScreenshotTestcase {
 	/**
 	 * @var bool
 	 */
@@ -46,6 +46,8 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 		if ($this->getConfiguration()->issetKey('testing.selenium.captureScreenshotOnFailure')) {
 			$this->captureScreenshotOnFailure = (bool)$this->getConfiguration()->getValue('testing.selenium.captureScreenshotOnFailure');
 		}
+
+		$GLOBALS['current_testcase'] = $this;
 	}
 
 	/**
