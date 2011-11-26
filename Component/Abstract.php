@@ -17,6 +17,14 @@ abstract class Menta_Component_Abstract implements Menta_Interface_Component {
 	 */
 	protected $configuration;
 
+	public function __construct() {
+		// check if we got constructed inside the component manager
+		$trace = debug_backtrace(false);
+		if ($trace[1]['class'] != 'Menta_ComponentManager') {
+			throw new Exception(sprintf('Use "Menta_ComponentManager::get(\'%1$s\')" instead of "new %1$s()" to get an instance of this component.', get_class($this)));
+		}
+	}
+
 	/**
 	 * Set session
 	 *
