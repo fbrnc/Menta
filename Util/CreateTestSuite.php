@@ -35,7 +35,9 @@ class Menta_Util_CreateTestSuite {
 				if ((substr(strtolower($fileName), -12) == 'testcase.php') || (substr(strtolower($fileName), -8) == 'test.php')) {
 					$files[] = $pathName;
 				} elseif ((substr(strtolower($fileName), -4) == '.php')) {
-					echo "WARNING: Found php file that is not a test file: $fileName\n";
+					if (strpos(strtolower($fileName), 'bootstrap') === false && strpos(strtolower($fileName), 'abstract') === false) {
+						echo "WARNING: Found php file that is not a test file: $fileName\n";
+					}
 				}
 			}
 		}
@@ -78,18 +80,6 @@ class Menta_Util_CreateTestSuite {
 	}
 
 	/**
-	 * Create Suite from file
-	 *
-	 * @param string $filename
-	 * @return PHPUnit_Framework_TestSuite
-	 */
-	public static function createSuiteFromFile($filename){
-		$tmpSuite = new PHPUnit_Framework_TestSuite();
-		$tmpSuite->addTestFile($filename);
-		return $tmpSuite;
-	}
-
-	/**
 	 * Creates the suite.
 	 *
 	 * Run single test or test from special folders by adding
@@ -98,21 +88,16 @@ class Menta_Util_CreateTestSuite {
 	 * --testPath <path>
 	 * to the phpunit call
 	 *
-	 * If no parameter is set it takes all tests from the "Tests" folder parallel to the Menta Framework parent directory
+	 * If no parameter is set it takes all tests from the current directory
 	 * 
 	 * @return PHPUnit_Framework_TestSuite|false
 	 */
 	public static function suite() {
 		global $argv;
 
-		$index = array_search('--testFile', $argv);
-		if ($index) {
-			$testSuite = self::createSuiteFromFile($argv[$index+1]);
-		} else {
-			$index = array_search('--testPath', $argv);
-			$testPath = $index ? $argv[$index+1] : MENTA_ROOTDIR . '/../../Tests/';
-			$testSuite = self::createSuiteFromPath($testPath);
-		}
+		$index = array_search('--testPath', $argv);
+		$testPath = ($index !== false) ? $argv[$index+1] : '.';
+		$testSuite = self::createSuiteFromPath($testPath);
 
 		if ($testSuite === false) {
 			throw new Exception('No testcases were found. Testcase files must end with "TestCase.php" or with "Test.php"');
