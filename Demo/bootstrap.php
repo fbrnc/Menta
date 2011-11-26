@@ -17,7 +17,7 @@ Menta_SessionManager::init(
 );
 
 // Do some stuff based on configuration values after the session is initialized
-Menta_Events::addObserver('_after_session_create', function(WebDriver_Session $session, $forceNew) {
+Menta_Events::addObserver('after_session_create', function(WebDriver_Session $session, $forceNew) {
 
 	$configuration = Menta_ConfigurationPhpUnitVars::getInstance();
 		
