@@ -66,8 +66,11 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 * @return void
 	 */
 	public function waitForElementPresent($locator, $timeout=null, $message=null) {
+		if (is_null($message)) {
+			$message = sprintf("Waiting for element '%s' timed out.", $this->getHelperCommon()->element2String($locator));
+		}
 		if (!$this->getHelperWait()->waitForElementPresent($locator, $timeout)) {
-			$this->getTest()->fail(!is_null($message) ? $message : 'Waiting for element present timed out');
+			$this->getTest()->fail($message);
 		}
 	}
 
@@ -80,8 +83,11 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 * @return void
 	 */
 	public function waitForElementNotPresent($locator, $timeout=null, $message=null) {
+		if (is_null($message)) {
+			$message = sprintf("Waiting for element '%s' disappearing timed out.", $this->getHelperCommon()->element2String($locator));
+		}
 		if (!$this->getHelperWait()->waitForElementNotPresent($locator, $timeout)) {
-			$this->getTest()->fail(!is_null($message) ? $message : 'Waiting for element not present timed out');
+			$this->getTest()->fail($message);
 		}
 	}
 
@@ -94,8 +100,11 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 * @return void
 	 */
 	public function waitForTextPresent($text, $timeout=null, $message=null) {
+		if (is_null($message)) {
+			$message = sprintf("Waiting for text '%s' timed out.", $text);
+		}
 		if (!$this->getHelperWait()->waitForTextPresent($text, $timeout)) {
-			$this->getTest()->fail(!is_null($message) ? $message : 'Waiting for text present timed out');
+			$this->getTest()->fail($message);
 		}
 	}
 
@@ -108,8 +117,11 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 * @return void
 	 */
 	public function waitForTextNotPresent($text, $timeout=null, $message=NULL) {
+		if (is_null($message)) {
+			$message = sprintf("Waiting for text '%s' disappearing timed out.", $text);
+		}
 		if (!$this->getHelperWait()->waitForTextNotPresent($text, $timeout)) {
-			$this->getTest()->fail(!is_null($message) ? $message : 'Waiting for text not present timed out');
+			$this->getTest()->fail($message);
 		}
 	}
 
