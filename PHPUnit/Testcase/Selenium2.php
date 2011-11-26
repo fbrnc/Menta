@@ -148,7 +148,7 @@ abstract class Menta_PHPUnit_Testcase_Selenium2 extends PHPUnit_Framework_TestCa
 
 		$time = time();
 
-		$screenshotHelper = Menta_ComponentManager::get('Menta_Component_Helper_Screenshot');
+		$screenshotHelper = Menta_ComponentManager::get('Menta_Component_Helper_Screenshot'); /* @var $screenshotHelper Menta_Component_Helper_Screenshot */
 		$base64Image = $screenshotHelper->takeScreenshotToString();
 
 		// put data into the screenshot object
