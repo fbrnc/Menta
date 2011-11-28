@@ -1,5 +1,9 @@
 <?php
 
+if (version_compare(PHP_VERSION, '5.3.0') <= 0) {
+	throw new Exception('Menta needs at least PHP 5.3');
+}
+
 define('MENTA_ROOTDIR', dirname(__FILE__));
 
 /**
