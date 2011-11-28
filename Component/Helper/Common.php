@@ -23,17 +23,17 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 		if (is_array($locator) && isset($locator['using']) && isset($locator['value'])) {
 			// already the correct element => do nothing
 		} elseif (substr($locator, 0, 6) == 'xpath=') {
-			$locator = array('using' => WebDriver_Container::BY_XPATH, 'value' => substr($locator, 6));
+			$locator = array('using' => WebDriver_Container::XPATH, 'value' => substr($locator, 6));
 		} elseif (strpos($locator, '/') !== false) {
-			$locator = array('using' => WebDriver_Container::BY_XPATH, 'value' => $locator);
+			$locator = array('using' => WebDriver_Container::XPATH, 'value' => $locator);
 		} elseif (substr($locator, 0, 3) == 'id=') {
-			$locator = array('using' => WebDriver_Container::BY_ID, 'value' => substr($locator, 3));
+			$locator = array('using' => WebDriver_Container::ID, 'value' => substr($locator, 3));
 		} elseif (substr($locator, 0, 4) == 'css=') {
-			$locator = array('using' => WebDriver_Container::BY_CSS, 'value' => substr($locator, 4));
+			$locator = array('using' => WebDriver_Container::CSS_SELECTOR, 'value' => substr($locator, 4));
 		} elseif (substr($locator, 0, 5) == 'link=') {
-			$locator = array('using' => WebDriver_Container::BY_LINKTEXT, 'value' => substr($locator, 5));
+			$locator = array('using' => WebDriver_Container::LINK_TEXT, 'value' => substr($locator, 5));
 		} elseif (is_string($locator)) {
-			$locator = array('using' => WebDriver_Container::BY_ID, 'value' => $locator);
+			$locator = array('using' => WebDriver_Container::ID, 'value' => $locator);
 		} else {
 			throw new Exception('Could not parse locator');
 		}
