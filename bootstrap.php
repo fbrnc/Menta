@@ -11,7 +11,7 @@ define('MENTA_ROOTDIR', dirname(__FILE__));
  * @author Fabrizio Branca
  * @since 2011-11-24
  */
-spl_autoload_register(function ($className) {
+function mentaAutoloader($className) {
 
 	// don't do autoloading for external classes
 	if (strpos($className, 'Menta_') !== 0) {
@@ -29,5 +29,7 @@ spl_autoload_register(function ($className) {
 		throw new Exception("File '$fileName' does not contain class/interface '$className'");
 	}
 	return true;
-		
-});
+
+}
+
+spl_autoload_register('mentaAutoloader');
