@@ -3,12 +3,8 @@
 	printerFile="../PHPUnit/Listener/VerboseResultPrinter.php">
 
 	<php>
-		<!--<var name="testing.selenium.seleniumServerUrl" value="http://seleniumserver:4444/wd/hub" />-->
-		<var name="testing.selenium.seleniumServerUrl" value="http://46.137.75.205:4444/wd/hub" />
-		<!--<var name="testing.selenium.browser" value="internet explorer" />-->
-		<!--<var name="testing.selenium.browser" value="chrome" />-->
-		<var name="testing.selenium.browser" value="htmlunit" />
-		<!--<var name="testing.selenium.browser" value="firefox" />-->
+		<var name="testing.selenium.seleniumServerUrl" value="http://seleniumserver:4444/wd/hub" />
+		<var name="testing.selenium.browser" value="firefox" />
 	</php>
 
 	<listeners>
