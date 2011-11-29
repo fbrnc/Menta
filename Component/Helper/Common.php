@@ -192,5 +192,35 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 		return $this->getElement($element)->text();
 	}
 
+	/**
+	 * Click on an element
+	 *
+	 * @param string|array|WebDriver_Element $element
+	 * @return void
+	 */
+	public function click($element) {
+		return $this->getElement($element)->click();
+	}
+
+	/**
+	 * Type something into an input box
+	 *
+	 * @param tring|array|WebDriver_Element $element
+	 * @param string $text
+	 * @param bool $resetContent
+	 * @param bool $leaveFieldAfterwards
+	 * @return void
+	 */
+	public function type($element, $text, $resetContent=false, $leaveFieldAfterwards=false) {
+		if ($resetContent) {
+			// got to the end, mark everything to the beginning to overwrite existing content
+			$text = WebDriver_Keys::End . WebDriver_Keys::Shift . WebDriver_Keys::Home . $text;
+		}
+		$this->getElement($element)->value(array('value' => array($text)));
+		if ($leaveFieldAfterwards) {
+			$this->click('//body');
+		}
+	}
+
 }
 
