@@ -301,7 +301,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 */
 	public function getFirstSelectedOption($element) {
 		$element = $this->getElement($element);
-		$options = $element->elements(WebDriver_Element::BY_XPATH, './/option');
+		$options = $element->elements(WebDriver_Element::XPATH, './/option');
 		foreach ($options as $option) { /* @var $option Webdriver_Element */
 			if ($option->selected()) {
 				return $option;
