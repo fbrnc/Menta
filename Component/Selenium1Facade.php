@@ -67,7 +67,10 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 */
 	public function waitForElementPresent($locator, $timeout=null, $message=null) {
 		if (is_null($message)) {
-			$message = sprintf("Waiting for element '%s' timed out.", $this->getHelperCommon()->element2String($locator));
+			$message = sprintf("Waiting for element '%s' timed out", $this->getHelperCommon()->element2String($locator));
+			if (!is_null($timeout)) {
+				$message .= " after $timeout seconds";
+			}
 		}
 		if (!$this->getHelperWait()->waitForElementPresent($locator, $timeout)) {
 			$this->getTest()->fail($message);
@@ -84,7 +87,10 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 */
 	public function waitForElementNotPresent($locator, $timeout=null, $message=null) {
 		if (is_null($message)) {
-			$message = sprintf("Waiting for element '%s' disappearing timed out.", $this->getHelperCommon()->element2String($locator));
+			$message = sprintf("Waiting for element '%s' disappearing timed out", $this->getHelperCommon()->element2String($locator));
+			if (!is_null($timeout)) {
+				$message .= " after $timeout seconds";
+			}
 		}
 		if (!$this->getHelperWait()->waitForElementNotPresent($locator, $timeout)) {
 			$this->getTest()->fail($message);
@@ -101,7 +107,10 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 */
 	public function waitForTextPresent($text, $timeout=null, $message=null) {
 		if (is_null($message)) {
-			$message = sprintf("Waiting for text '%s' timed out.", $text);
+			$message = sprintf("Waiting for text '%s' timed out", $text);
+			if (!is_null($timeout)) {
+				$message .= " after $timeout seconds";
+			}
 		}
 		if (!$this->getHelperWait()->waitForTextPresent($text, $timeout)) {
 			$this->getTest()->fail($message);
@@ -118,7 +127,10 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 */
 	public function waitForTextNotPresent($text, $timeout=null, $message=NULL) {
 		if (is_null($message)) {
-			$message = sprintf("Waiting for text '%s' disappearing timed out.", $text);
+			$message = sprintf("Waiting for text '%s' disappearing timed out", $text);
+			if (!is_null($timeout)) {
+				$message .= " after $timeout seconds";
+			}
 		}
 		if (!$this->getHelperWait()->waitForTextNotPresent($text, $timeout)) {
 			$this->getTest()->fail($message);
@@ -134,20 +146,38 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 * @return void
 	 */
 	public function waitForCondition($jsSnippet, $timeout=NULL, $message=NULL) {
+		if (is_null($message)) {
+			$message = sprintf("Waiting for condition '%s' timed out", $jsSnippet);
+			if (!is_null($timeout)) {
+				$message .= " after $timeout seconds";
+			}
+		}
 		if (!$this->getHelperWait()->waitForCondition($jsSnippet, $timeout)) {
-			$this->getTest()->fail(!is_null($message) ? $message : 'Waiting for condition timed out');
+			$this->getTest()->fail($message);
 		}
 	}
 
-	public function waitForVisible($locator, $timeout=NULL, $message=NULL) {
+	public function waitForVisible($locator, $timeout=NULL, $message=NULL) {#
+		if (is_null($message)) {
+			$message = sprintf("Waiting for element '%s' visible timed out", $this->getHelperCommon()->element2String($locator));
+			if (!is_null($timeout)) {
+				$message .= " after $timeout seconds";
+			}
+		}
 		if (!$this->getHelperWait()->waitForElementVisible($locator, $timeout)) {
-			$this->getTest()->fail(!is_null($message) ? $message : 'Waiting for visible timed out');
+			$this->getTest()->fail($message);
 		}
 	}
 
 	public function waitForNotVisible($locator, $timeout=NULL, $message=NULL) {
+		if (is_null($message)) {
+			$message = sprintf("Waiting for element '%s' not visible timed out", $this->getHelperCommon()->element2String($locator));
+			if (!is_null($timeout)) {
+				$message .= " after $timeout seconds";
+			}
+		}
 		if (!$this->getHelperWait()->waitForElementNotVisible($locator, $timeout)) {
-			$this->getTest()->fail(!is_null($message) ? $message : 'Waiting for not visible timed out');
+			$this->getTest()->fail($message);
 		}
 	}
 
@@ -192,8 +222,12 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 		return $this->getSession()->open($this->getBrowserUrl() . $url);
 	}
 
-	public function start() {}
-	public function stop() {}
+	public function start() {
+		// session handling is controlled different now
+	}
+	public function stop() {
+		// session handling is controlled different now
+	}
 	
 	public function windowFocus() {
 		$this->getHelperCommon()->focusWindow();
@@ -203,6 +237,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	}
 
 	public function waitForPageToLoad() {
+		// TODO: find an appropriate solution to this
 		// http://seleniumhq.org/docs/appendix_migrating_from_rc_to_webdriver.html#waitforpagetoload-returns-too-soon
 		sleep(5);
 	}
@@ -211,14 +246,37 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 		return $this->getHelperCommon()->getEval($jsSnippet);
 	}
 
-	/* Interaction with elements */
-
+	/**
+	 * Click on an element
+	 *
+	 * @param string|array|WebDriver_Element $element
+	 * @return void
+	 */
 	public function click($element) {
-		return $this->getElement($element)->click();
+		return $this->getHelperCommon()->click($element);
 	}
 
+	/**
+	 * Type something
+	 *
+	 * @param string|array|WebDriver_Element $element
+	 * @param $text
+	 * @return void
+	 */
 	public function type($element, $text) {
-		return $this->getElement($element)->value(array('value' => array($text)));
+		return $this->getHelperCommon()->type($element, $text);
+	}
+
+	/**
+	 * Type text into an input field
+	 * Reset first and click outside afterwards
+	 *
+	 * @param string|array|WebDriver_Element $element
+	 * @param string $text
+	 * @return void
+	 */
+	public function typeAndLeave($element, $text) {
+		return $this->getHelperCommon()->type($element, $text, true, true);
 	}
 
 	/**
@@ -248,6 +306,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 
 	public function fireEvent($element, $event) {
 		// do nothing?!
+		// TODO
 	}
 
 	/**
@@ -261,6 +320,12 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 		return $element->getAttribute('value');
 	}
 
+	/**
+	 * Check if element is visible
+	 *
+	 * @param string|array|WebDriver_Element $element
+	 * @return bool
+	 */
 	public function isVisible($element) {
 		return $this->getHelperCommon()->isVisible($element);
 	}
@@ -343,11 +408,11 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	}
 
 	public function waitForAjaxCompletedJquery() {
-		$this->getHelperWait()->waitForCondition('return jQuery.active == 0');
+		$this->getHelperWait()->waitForCondition('return (jQuery.active == 0)');
 	}
 
 	public function waitForAjaxCompletedPrototype() {
-		$this->getHelperWait()->waitForCondition('return Ajax.activeRequestCount == 0');
+		$this->getHelperWait()->waitForCondition('return (Ajax.activeRequestCount == 0)');
 	}
 
 	/**
@@ -359,23 +424,6 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 		$this->getTest()->assertTrue($this->isElementPresent($clickElement), 'element: ' . $clickElement . ' is not present' );
 		$this->click($clickElement);
 		$this->waitForElementPresent($waitForElementAfterClick, $timeout);
-	}
-
-	/**
-	 * Type text into an input field
-	 * Reset first and click outside afterwards
-	 *
-	 * @param string|array|WebDriver_Element $element
-	 * @param string $text
-	 * @return void
-	 */
-	public function typeAndLeave($element, $text) {
-		// select complete text in order to overwrite it
-		$this->type($element, WebDriver_Keys::End . WebDriver_Keys::Shift . WebDriver_Keys::Home);
-		// type actual text
-		$this->type($element, $text);
-		// leave the field
-		$this->click('//body'); // click somewhere outside to trigger actual human behaviour
 	}
 
 	/**
