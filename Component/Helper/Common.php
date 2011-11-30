@@ -212,11 +212,12 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 	 * @return void
 	 */
 	public function type($element, $text, $resetContent=false, $leaveFieldAfterwards=false) {
+		$element = $this->getElement($element);
 		if ($resetContent) {
 			// got to the end, mark everything to the beginning to overwrite existing content
-			$text = WebDriver_Keys::End . WebDriver_Keys::Shift . WebDriver_Keys::Home . $text;
+			$element->value(array('value' => array(WebDriver_Keys::End . WebDriver_Keys::Shift . WebDriver_Keys::Home)));
 		}
-		$this->getElement($element)->value(array('value' => array($text)));
+		$element->value(array('value' => array($text)));
 		if ($leaveFieldAfterwards) {
 			$this->click('//body');
 		}
