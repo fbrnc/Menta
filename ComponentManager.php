@@ -42,7 +42,7 @@ class Menta_ComponentManager {
 
 			// fire events
 			$eventParamaters = array(
-				'component' => self::$components[$component],
+				'component' => self::$components[$component][$instanceKey],
 				'instanceKey' => $instanceKey
 			);
 			Menta_Events::dispatchEvent('after_component_create', $eventParamaters);
