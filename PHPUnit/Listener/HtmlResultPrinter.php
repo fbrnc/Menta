@@ -127,22 +127,21 @@ class Menta_PHPUnit_Listener_HtmlResultPrinter extends Menta_PHPUnit_Listener_Ab
 	 * This method is called once after all tests have been processed.
 	 * HINT: The flush method is only called if the TestListener inherits from PHPUnit_Util_Printer
 	 *
+	 * @param array $templateVars
 	 * @return void
 	 * @author Fabrizio Branca
 	 */
-	public function flush() {
+	public function flush(array $templateVars=array()) {
 		ksort($this->count);
 		$sum = array_sum($this->count);
-		$percentages = array();
+		$templateVars['percentages'] = array();
 		foreach($this->count as $key => $value) {
-			$percentages[$key] = 100 * $value/$sum;
+			$templateVars['percentages'][$key] = 100 * $value/$sum;
 		}
-		return parent::flush(array(
-			'basedir' => dirname($this->targetFile),
-			'results' => $this->results,
-			'count' => $this->count,
-			'percentages' => $percentages
-		));
+		$templateVars['basedir'] = dirname($this->targetFile);
+		$templateVars['results'] = $this->results;
+		$templateVars['count'] = $this->count;
+		return parent::flush($templateVars);
 	}
 
 }
