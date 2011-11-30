@@ -17,25 +17,38 @@ class Menta_ComponentManager {
 	 *
 	 * @static
 	 * @throws Exception|InvalidArgumentException
-	 * @param $component
+	 * @param string $component
+	 * @param string $instanceKey
 	 * @return Menta_Interface_Component
 	 */
-	public static function get($component) {
+	public static function get($component, $instanceKey='default') {
 		if (empty($component) || !is_string($component)) {
-			throw new InvalidArgumentException('Parameter must be a classname');
+			throw new InvalidArgumentException('Parameter "component" must be a classname');
+		}
+		if (empty($instanceKey) || !is_string($instanceKey)) {
+			throw new InvalidArgumentException('Parameter "instanceKey" must be a non empty string');
 		}
 		if (!isset(self::$components[$component])) {
+			self::$components[$component] = array();
+		}
+		if (!isset(self::$components[$component][$instanceKey])) {
 			if (!class_exists($component)) {
 				throw new Exception('Could not find component '.$component);
 			}
-			self::$components[$component] = new $component();
-			if (!self::$components[$component] instanceof Menta_Interface_Component) {
+			self::$components[$component][$instanceKey] = new $component();
+			if (!self::$components[$component][$instanceKey] instanceof Menta_Interface_Component) {
 				throw new Exception("Component '$component' does not implement interface 'Menta_Interfaces_Component'");
 			}
-			Menta_Events::dispatchEvent('after_component_create', array('component' => self::$components[$component]));
-			Menta_Events::dispatchEvent('after_component_create_' . $component, array('component' => self::$components[$component]));
+
+			// fire events
+			$eventParamaters = array(
+				'component' => self::$components[$component],
+				'instanceKey' => $instanceKey
+			);
+			Menta_Events::dispatchEvent('after_component_create', $eventParamaters);
+			Menta_Events::dispatchEvent('after_component_create_' . $component, $eventParamaters);
 		}
-		return self::$components[$component];
+		return self::$components[$component][$instanceKey];
 	}
 
 }
