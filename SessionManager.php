@@ -106,8 +106,10 @@ class Menta_SessionManager {
 	 */
 	public static function closeSession() {
 		if (self::activeSessionExists()) {
+			Menta_Events::dispatchEvent('before_session_close', array('session' => self::$session));
 			self::$session->close();
 			self::$session = NULL;
+			Menta_Events::dispatchEvent('after_session_close');
 		}
 	}
 
