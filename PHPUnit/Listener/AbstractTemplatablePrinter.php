@@ -95,7 +95,10 @@ abstract class Menta_PHPUnit_Listener_AbstractTemplatablePrinter extends PHPUnit
 		$this->copyAdditionalFiles();
 
 		$className = $this->viewClass;
-		$view = new $className($this->templateFile);
+		$view = new $className($this->templateFile); /* @var $view Menta_Util_View  */
+		if (!$view instanceof Menta_Util_View) {
+			throw new Exception('View must inherit from Menta_Util_View.');
+		}
 		foreach ($templateVars as $key => $value) {
 			$view->assign($key, $value);
 		}
