@@ -223,5 +223,29 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 		}
 	}
 
+	/**
+	 * Select an option of a select box
+	 * Option can be specified via
+	 * - "value=<value>" -or-
+	 * - "label=<label>"
+	 *
+	 * @param tring|array|WebDriver_Element $element
+	 * @param string $option
+	 * @throws Exception
+	 */
+	public function select($element, $option) {
+		$element = $this->getElement($element);
+		if (substr($option, 0, 6) == 'value=') {
+			$option = substr($option, 6);
+			$option = $element->element(WebDriver_Container::XPATH, 'option[@value="'.$option.'"]');
+		} elseif (substr($option, 0, 6) == 'label=') {
+			$option = substr($option, 6);
+			$option = $element->element(WebDriver_Container::XPATH, 'option[normalize-space(text())="'.$option.'"]');
+		} else {
+			throw new Exception('Expecting label to begin with "label=" or "value="');
+		}
+		$option->click();
+	}
+
 }
 

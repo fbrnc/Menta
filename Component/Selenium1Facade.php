@@ -291,17 +291,7 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 * @return void
 	 */
 	public function select($element, $option) {
-		$element = $this->getElement($element);
-		if (substr($option, 0, 6) == 'value=') {
-			$option = substr($option, 6);
-			$option = $element->element(WebDriver_Container::XPATH, 'option[@value="'.$option.'"]');
-		} elseif (substr($option, 0, 6) == 'label=') {
-			$option = substr($option, 6);
-			$option = $element->element(WebDriver_Container::XPATH, 'option[normalize-space(text())="'.$option.'"]');
-		} else {
-			throw new Exception('Expecting label to begin with "label=" or "value="');
-		}
-		$option->click();
+		$this->getHelperCommon()->select($element, $option);
 	}
 
 	public function fireEvent($element, $event) {
