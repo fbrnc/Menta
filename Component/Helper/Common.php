@@ -229,7 +229,7 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 	 * - "value=<value>" -or-
 	 * - "label=<label>"
 	 *
-	 * @param tring|array|WebDriver_Element $element
+	 * @param string|array|WebDriver_Element $element
 	 * @param string $option
 	 * @throws Exception
 	 */
