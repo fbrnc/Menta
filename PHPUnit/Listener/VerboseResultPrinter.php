@@ -118,7 +118,7 @@ class Menta_PHPUnit_Listener_VerboseResultPrinter extends PHPUnit_TextUI_ResultP
 	public function startTestSuite(PHPUnit_Framework_TestSuite $suite) {
 		$this->level++;
 		$this->starttimes[$this->level] = microtime(true);
-		$this->write(sprintf("%s» SUITE: %s\n", str_repeat('  ', $this->level), PHPUnit_Util_Test::describe($suite)));
+		$this->write(sprintf("%s> SUITE: %s\n", str_repeat('  ', $this->level), PHPUnit_Util_Test::describe($suite)));
 		return parent::startTestSuite($suite);
 	}
 
@@ -129,7 +129,7 @@ class Menta_PHPUnit_Listener_VerboseResultPrinter extends PHPUnit_TextUI_ResultP
 	 * @return void
 	 */
 	public function endTestSuite(PHPUnit_Framework_TestSuite $suite) {
-		$this->write(sprintf("%s« Duration: %s sec\n", str_repeat('  ', $this->level), $this->getDuration()));
+		$this->write(sprintf("%s< Duration: %s sec\n", str_repeat('  ', $this->level), $this->getDuration()));
 		$this->level--;
 		return parent::endTestSuite($suite);
 	}
@@ -143,7 +143,7 @@ class Menta_PHPUnit_Listener_VerboseResultPrinter extends PHPUnit_TextUI_ResultP
 	public function startTest(PHPUnit_Framework_Test $test) {
 		$this->level++;
 		$this->starttimes[$this->level] = microtime(true);
-		$this->write(sprintf("%s› TEST: %s\n", str_repeat('  ', $this->level), PHPUnit_Util_Test::describe($test)));
+		$this->write(sprintf("%s> TEST: %s\n", str_repeat('  ', $this->level), PHPUnit_Util_Test::describe($test)));
 	}
 
 	/**
