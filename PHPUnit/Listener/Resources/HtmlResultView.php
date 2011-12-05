@@ -26,8 +26,8 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View {
 				if ($test['exception'] instanceof Exception) {
 					$e = $test['exception']; /* @var $e Exception */
 					$result .= '<div class="exception">';
-						$result .= '<i>'. nl2br(PHPUnit_Util_Filter::getFilteredStacktrace($e)) . '</i>'."<br />\n";
-						$result .= '<pre>' . PHPUnit_Framework_TestFailure::exceptionToString($e) . '</pre>';
+						$result .= '<i>'. nl2br($this->escape(PHPUnit_Util_Filter::getFilteredStacktrace($e))) . '</i>'."<br />\n";
+						$result .= '<pre>' . $this->escape(PHPUnit_Framework_TestFailure::exceptionToString($e)) . '</pre>';
 					$result .= '</div><!-- exception -->';
 				}
 
@@ -60,7 +60,7 @@ class Menta_PHPUnit_Listener_Resources_HtmlResultView extends Menta_Util_View {
 				$filenName = 'screenshot_' . $uniqId . '.png';
 				$thumbnailName = 'screenshot_' . $uniqId . '_thumb.png';
 
-				$image = $screenshot->writeToDisk($directory . DIRECTORY_SEPARATOR . $filenName);
+				$screenshot->writeToDisk($directory . DIRECTORY_SEPARATOR . $filenName);
 
 				// create thumbnail
 				$simpleImage = new Menta_Util_SimpleImage($directory . DIRECTORY_SEPARATOR . $filenName);

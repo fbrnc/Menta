@@ -61,4 +61,27 @@ class Menta_Util_View {
 		return $output;
 	}
 
+	/**
+	 * Escape
+	 *
+	 * @param string $data
+	 * @param null $allowedTags
+	 * @return string
+	 */
+	public function escape($data, $allowedTags=null) {
+		if (strlen($data) > 0) {
+			if (is_array($allowedTags) && !empty($allowedTags)) {
+				$allowed = implode('|', $allowedTags);
+				$result = preg_replace('/<([\/\s\r\n]*)(' . $allowed . ')([\/\s\r\n]*)>/si', '##$1$2$3##', $data);
+				$result = htmlspecialchars($result);
+				$result = preg_replace('/##([\/\s\r\n]*)(' . $allowed . ')([\/\s\r\n]*)##/si', '<$1$2$3>', $result);
+			} else {
+				$result = htmlspecialchars($data);
+			}
+		} else {
+			$result = $data;
+		}
+		return $result;
+	}
+
 }
