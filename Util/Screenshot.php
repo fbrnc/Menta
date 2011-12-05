@@ -26,7 +26,6 @@ class Menta_Util_Screenshot {
 	 * Write image to disk
 	 *
 	 * @param string $filename
-	 * @return string path of the written image
 	 * @throws Exception
 	 */
 	public function writeToDisk($filename) {
