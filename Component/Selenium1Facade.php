@@ -210,14 +210,26 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 		return $this->getHelperCommon()->getText($element);
 	}
 
+	/**
+	 * Get browser url
+	 *
+	 * @return string
+	 * @throws Exception
+	 */
 	public function getBrowserUrl() {
 		if (empty($this->browserUrl)) {
-			$this->browserUrl = Menta_ConfigurationPhpUnitVars::getInstance()->getValue('testing.maindomain');
-			// throw new Exception('browserUrl has not been set.');
+			// $this->browserUrl = Menta_ConfigurationPhpUnitVars::getInstance()->getValue('testing.maindomain');
+			throw new Exception('browserUrl has not been set.');
 		}
 		return $this->browserUrl;
 	}
 
+	/**
+	 * Open an url prefixed with the previously configured browserUrl
+	 *
+	 * @param string $url
+	 * @return WebDriver_Base
+	 */
 	public function open($url) {
 		return $this->getSession()->open($this->getBrowserUrl() . $url);
 	}
