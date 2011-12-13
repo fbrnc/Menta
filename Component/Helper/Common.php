@@ -277,5 +277,22 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 		return $label;
 	}
 
+	/**
+	 * Get first selected option
+	 *
+	 * @param string|array|WebDriver_Element $element
+	 * @return bool|Webdriver_Element
+	 */
+	public function getFirstSelectedOption($element) {
+		$element = $this->getElement($element);
+		$options = $element->elements(WebDriver_Element::XPATH, './/option');
+		foreach ($options as $option) { /* @var $option Webdriver_Element */
+			if ($option->selected()) {
+				return $option;
+			}
+		}
+		return false;
+	}
+
 }
 
