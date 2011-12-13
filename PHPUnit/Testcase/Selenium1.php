@@ -96,6 +96,12 @@ abstract class Menta_PHPUnit_Testcase_Selenium1 extends Menta_PHPUnit_Testcase_S
 		return Menta_ConfigurationPhpUnitVars::getInstance();
 	}
 
+	/**
+	 * Set browser url
+	 *
+	 * @param $baseUrl
+	 * @return void
+	 */
 	public function setBrowserUrl($baseUrl) {
 		$this->getSelenium1Facade()->setBrowserUrl($baseUrl);
 	}
