@@ -335,31 +335,22 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	/**
 	 * Get selected label
 	 *
-	 * @param $element
+	 * @param string|array|WebDriver_Element $element
 	 * @return bool|string
 	 */
 	public function getSelectedLabel($element) {
-		$label = false;
-		$firstSelectedOption = $this->getFirstSelectedOption($element);
-		if ($firstSelectedOption !== false) {
-			$label = $firstSelectedOption->text();
-		}
-		return $label;
+		return $this->getHelperCommon()->getSelectedLabel($element);
+
 	}
 
 	/**
 	 * Get selected value
 	 *
-	 * @param $element
+	 * @param string|array|WebDriver_Element $element
 	 * @return bool|string
 	 */
 	public function getSelectedValue($element) {
-		$label = false;
-		$firstSelectedOption = $this->getFirstSelectedOption($element);
-		if ($firstSelectedOption !== false) {
-			$label = $firstSelectedOption->getAttribute('value');
-		}
-		return $label;
+		return $this->getHelperCommon()->getSelectedValue($element);
 	}
 
 	/**

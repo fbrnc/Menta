@@ -247,5 +247,35 @@ class Menta_Component_Helper_Common extends Menta_Component_Abstract {
 		$option->click();
 	}
 
+	/**
+	 * Get selected label
+	 *
+	 * @param string|array|WebDriver_Element $element
+	 * @return bool|string
+	 */
+	public function getSelectedLabel($element) {
+		$label = false;
+		$firstSelectedOption = $this->getFirstSelectedOption($element);
+		if ($firstSelectedOption !== false) {
+			$label = $firstSelectedOption->text();
+		}
+		return $label;
+	}
+
+	/**
+	 * Get selected value
+	 *
+	 * @param string|array|WebDriver_Element $element
+	 * @return bool|string
+	 */
+	public function getSelectedValue($element) {
+		$label = false;
+		$firstSelectedOption = $this->getFirstSelectedOption($element);
+		if ($firstSelectedOption !== false) {
+			$label = $firstSelectedOption->getAttribute('value');
+		}
+		return $label;
+	}
+
 }
 
