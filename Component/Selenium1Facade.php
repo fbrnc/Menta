@@ -231,7 +231,10 @@ class Menta_Component_Selenium1Facade extends Menta_Component_AbstractTest {
 	 * @return WebDriver_Base
 	 */
 	public function open($url) {
-		return $this->getSession()->open($this->getBrowserUrl() . $url);
+		if (!preg_match('/^https?:/i', $url)) {
+			$url = $this->getBrowserUrl() . $url;
+		}
+		return $this->getSession()->open($url);
 	}
 
 	public function start() {
