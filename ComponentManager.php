@@ -11,6 +11,30 @@ class Menta_ComponentManager {
 	 * @var array
 	 */
 	protected static $components = array();
+	
+	protected static $rewrites = array();
+
+	/**
+	 * Set rewrite
+	 *
+	 * @static
+	 * @param string $originalClassname
+	 * @param string $targetClassname
+	 * @throws Exception|InvalidArgumentException
+	 * @return void
+	 */
+	public static function addRewrite($originalClassname, $targetClassname) {
+		if (empty($originalClassname) || !is_string($originalClassname)) {
+			throw new InvalidArgumentException('Invalid originalClassname');
+		}
+		if (empty($targetClassname) || !is_string($targetClassname)) {
+			throw new InvalidArgumentException('Invalid targetClassname');
+		}
+		if (isset(self::$rewrites[$originalClassname])) {
+			throw new Exception("Rewrite for '$originalClassname'' already exists.");
+		}
+		self::$rewrites[$originalClassname] = $targetClassname;
+	}
 
 	/**
 	 * Get component
@@ -28,6 +52,14 @@ class Menta_ComponentManager {
 		if (empty($instanceKey) || !is_string($instanceKey)) {
 			throw new InvalidArgumentException('Parameter "instanceKey" must be a non empty string');
 		}
+
+		$originalComponentClass = $component;
+
+		// resolve rewrite
+		if (isset(self::$rewrites[$component])) {
+			$component = self::$rewrites[$component];
+		}
+
 		if (!isset(self::$components[$component])) {
 			self::$components[$component] = array();
 		}
@@ -38,6 +70,10 @@ class Menta_ComponentManager {
 			self::$components[$component][$instanceKey] = new $component();
 			if (!self::$components[$component][$instanceKey] instanceof Menta_Interface_Component) {
 				throw new Exception("Component '$component' does not implement interface 'Menta_Interfaces_Component'");
+			}
+
+			if ($originalComponentClass != $component && !self::$components[$component][$instanceKey] instanceof $originalComponentClass) {
+				throw new Exception("Rewrite '$component' does not extend original class '$originalComponentClass'");
 			}
 
 			// fire events
