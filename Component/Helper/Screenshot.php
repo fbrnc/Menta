@@ -8,7 +8,7 @@
 class Menta_Component_Helper_Screenshot extends Menta_Component_Abstract {
 
 	/**
-	 * ake screenshot
+	 * take screenshot
 	 *
 	 * @return string
 	 */
