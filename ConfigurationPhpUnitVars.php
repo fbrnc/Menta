@@ -56,6 +56,12 @@ class Menta_ConfigurationPhpUnitVars implements Menta_Interface_Configuration {
 		if (!$this->issetKey($key)) {
 			throw new Exception(sprintf('Could not find configuration key "%s"', $key));
 		}
+
+		// json decoding if possible
+		$jsonDecoded = json_decode($GLOBALS[$key], true);
+		if (!is_null($jsonDecoded)) {
+			$GLOBALS[$key] = $jsonDecoded;
+		}
 		return $GLOBALS[$key];
 	}
 
